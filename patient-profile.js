@@ -28,7 +28,19 @@ function saveData() {
     fs.writeFileSync(FILE, JSON.stringify(patientData, null, 2));
 }
 
-
+function promptYN(question, callback){ 
+    rl.question(question, answer => { 
+        const ans = answer.trim().toLowerCase()
+        if(ans === "y" || ans === "yes"){
+            callback(true)//runs the function provided with the value as true 
+        } else if (ans === "n" || ans === "no"){
+            callback(false)//runs the function provided with the value as false 
+        }else{
+            console.log("Please type either y or n")
+            promptYN(question,callback) //reruns the function if there is an invalid input
+        }
+    })
+}
 
 let isPatient;
 function initialiseProgram(){
@@ -60,6 +72,7 @@ function printPatientList(){
         console.log("\nNo patients currently exist");
     }else{
         //print table headers
+        console.log("\n  List of existing patients:")
         console.log("\n  Full name         |  NHI number");
         console.log("--------------------|------------------");
         //print full name and NHI number in a formatted table
@@ -73,8 +86,12 @@ function printPatientList(){
         });
     }
 
+    askForPatient()
+}
+
+function askForPatient(){
     rl.question("\nPlease type the full name or NHI number of the patient you would like to view the data of (or create a patient profile for) ", patientID =>{
-        let patientFound = false
+        let patientFound = null
         let fullName;
         patientData.forEach((data, idx) => {
             fullName = (data.firstname + " " + data.lastname).trim().toLowerCase()
@@ -85,15 +102,30 @@ function printPatientList(){
                 patientFound = idx
                 printFullPatientData(patientFound)
             }
-        });
-        //if someehifnkasdfas
+        })
+
+        if(patientFound == null){
+            promptYN("\nPatient does not exist, would you like to create a new patient? (y/n)",createNew => {
+                if(createNew){
+                    createNewPatient()
+                }else{
+                    askForPatient()
+                }
+                
+            })
+        }
 
     })
-
-    
-    
-    
 }
+    
+function createNewPatient() {
+    console.log("createNewPatient function ran")
+    rl.close()
+}
+    
+
+
+
 
 //function to display all patient information in a table format
 function printFullPatientData(idx) {
@@ -118,3 +150,43 @@ function printFullPatientData(idx) {
 }
 
 initialiseProgram()
+
+
+
+
+
+
+
+
+//function to add a new patient and their details to the json file
+function createNewPatient() {
+    rl.question("\nEnter first name: ", firstNameInput => { //ask for the first name
+        let firstName = firstNameInput.toLowerCase().trim();      //remove empty space from ends and convert to lower case
+        if (firstName === ""){ console.log("Invalid input"); return createNewPatient() } //check if empty
+        //////////////////////////
+        rl.question('Enter last name: ', lastNameInput => {         // Ask for the expense category
+            let lastName = firstNameInput.toLowerCase().trim();      
+            if (firstName === ""){ console.log("Invalid input"); return createNewPatient() }
+
+            if (!category.trim()) return showMenu();            // Validate input
+            rl.question('Enter description: ', description => { // Ask for an optional description
+                const now = new Date();                           // Get current date and time
+                const date = now.toISOString().slice(0, 10);      // Format date as YYYY-MM-DD
+                const time = now.toTimeString().slice(0, 8);      // Format time as HH:MM:SS
+                // Add the new expense to the array
+                patientData.push({
+                firstName,//add capitals////////////////////
+                lastName,
+                a,
+                b,
+                c,
+                d
+                });
+                ////////////////////////
+                saveData(); //save updated patient info to the JSON file
+                console.log("Patient added!");
+                printFullPatientData(length(patientData)) //prints the data of the new patient
+            });
+        });
+    });
+}
