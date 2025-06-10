@@ -1,0 +1,20 @@
+[
+  {
+    "firstname": "Jeff",
+    "lastname": "Jefferson",
+    "birthdate": "15/01/2001",
+    "gender": "male",
+    "NHI": "ABC1234",
+    "address": "15 skibidi lane",
+    "phonenumber": "0225782232"
+  },
+  {
+    "firstname": "Henry",
+    "lastname": "Adams",
+    "birthdate": "22/04/1988",
+    "gender": "unspecified",
+    "NHI": "HGW4732",
+    "address": "15 chungus street",
+    "phonenumber": "0244747232"
+  }
+]
