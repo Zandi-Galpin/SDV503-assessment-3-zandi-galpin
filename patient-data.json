@@ -14,5 +14,13 @@
     "gender": "male",
     "NHI": "AMH0192",
     "phoneNumber": "0229103903"
+  },
+  {
+    "firstName": "Jeffy",
+    "lastName": "Jefferson",
+    "birthDate": "10/10/2002",
+    "gender": "male",
+    "NHI": "ABC1234",
+    "phoneNumber": "0223400192"
   }
 ]
