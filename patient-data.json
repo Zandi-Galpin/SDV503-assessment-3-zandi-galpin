@@ -1,13 +1,5 @@
 [
   {
-    "firstName": "Jeffy",
-    "lastName": "Jefferson",
-    "birthDate": "15/01/2001",
-    "gender": "male",
-    "NHI": "ABC1234",
-    "phoneNumber": "0225782232"
-  },
-  {
     "firstName": "Henry",
     "lastName": "Adams",
     "birthDate": "22/04/1988",

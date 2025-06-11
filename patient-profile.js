@@ -142,18 +142,26 @@ function printFullPatientData(idx) {
     promptYN("\nWould you like to edit this patient's data? (y/n)",editPatient => {//prompt y/n if they want to edit selected patient data
         if(editPatient){
             editChosenPatient(idx)//if yes, run edit function
-        }else{//if no, prompt y/n whether they want to leave the program or return to patient list
-            promptYN("Would you like to exit the program (y/n) (y = exit, n = go back to list of patient names) ", exitProgram =>{
-                if(exitProgram){//if yes, end program
-                    console.log("Exiting program, goodbye")
-                    rl.close()
-                }else{//if no, run the patient list function again
-                    printPatientList()
+        }else{//if no, prompt y/n whether they want to delete the selected patient
+            promptYN("Would you like to delete the selected patient? WARNING: THIS CANNOT BE UNDONE (y/n)", deletePatient =>{
+                if(deletePatient){//if yes, delete the selected patient
+                    const deleted = patientData.splice(idx, 1); //remove the patient object at the idx
+                    console.log("Patient "+deleted[0].firstName,deleted[0].lastName + " has been deleted")
+                    saveData()
+                    printPatientList()                    
+                }else{//if no, prompt y/n whether they want to leave the program or return to patient list
+                    promptYN("Would you like to exit the program (y/n) (y = exit, n = go back to list of patient names) ", exitProgram =>{
+                        if(exitProgram){//if yes, end program
+                            console.log("Exiting program, goodbye")
+                            rl.close()
+                        }else{//if no, run the patient list function again
+                            printPatientList()
+                        }
+                    })
                 }
-            })
+            })            
         }
-    })
-        
+    }) 
 }
 
 //function to add a new patient and their details to the json file
